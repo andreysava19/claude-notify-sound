@@ -1,0 +1,11 @@
+{
+  "name": "clg-internal",
+  "owner": { "name": "Jose Salazar", "email": "asalazar@clg-cr.com" },
+  "plugins": [
+    {
+      "name": "claude-notify-sound",
+      "source": "./",
+      "description": "Cross-platform notification sound on Stop and Notification hooks"
+    }
+  ]
+}
