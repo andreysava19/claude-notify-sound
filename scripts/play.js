@@ -30,4 +30,27 @@ function buildPlayback(platform, sound, fallback = false) {
   }
 }
 
-module.exports = { SYSTEM_SOUNDS, resolveSound, buildPlayback };
+function play(platform, override) {
+  const sound = resolveSound(platform, override);
+  if (!sound) return; // unsupported platform: silent no-op
+  const pb = buildPlayback(platform, sound);
+  if (!pb) return;
+  try {
+    const child = spawn(pb.command, pb.args, { stdio: 'ignore' });
+    child.on('error', () => {
+      if (platform !== 'linux') return; // fail silently
+      const fb = buildPlayback(platform, sound, true); // try aplay
+      try {
+        const c2 = spawn(fb.command, fb.args, { stdio: 'ignore' });
+        c2.on('error', () => {});
+      } catch (_) { /* silent */ }
+    });
+  } catch (_) { /* silent */ }
+}
+
+if (require.main === module) {
+  // process.argv[2] is the event name (stop|notification); v1 uses one sound for all.
+  play(process.platform, process.env.CLAUDE_NOTIFY_SOUND);
+}
+
+module.exports = { SYSTEM_SOUNDS, resolveSound, buildPlayback, play };
