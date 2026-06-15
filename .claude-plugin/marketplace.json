@@ -4,7 +4,7 @@
   "plugins": [
     {
       "name": "claude-notify-sound",
-      "source": "./",
+      "source": "../",
       "description": "Cross-platform notification sound on Stop and Notification hooks"
     }
   ]
