@@ -13,12 +13,14 @@ function resolveSound(platform, override) {
 
 function buildPlayback(platform, sound, fallback = false) {
   switch (platform) {
-    case 'win32':
+    case 'win32': {
+      const escaped = sound.replace(/'/g, "''");
       return {
         command: 'powershell',
         args: ['-NoProfile', '-Command',
-          `(New-Object System.Media.SoundPlayer '${sound}').PlaySync()`],
+          `(New-Object System.Media.SoundPlayer '${escaped}').PlaySync()`],
       };
+    }
     case 'darwin':
       return { command: 'afplay', args: [sound] };
     case 'linux':

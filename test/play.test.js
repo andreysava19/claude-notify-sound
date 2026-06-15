@@ -3,10 +3,16 @@ const assert = require('node:assert');
 const { buildPlayback, resolveSound, SYSTEM_SOUNDS } = require('../scripts/play.js');
 
 test('win32 builds a PowerShell SoundPlayer command', () => {
-  const pb = buildPlayback('win32', 'C:\\Windows\\Media\\chimes.wav');
-  assert.strictEqual(pb.command, 'powershell');
-  assert.ok(pb.args.includes('-NoProfile'));
-  assert.ok(pb.args.some(a => a.includes('SoundPlayer') && a.includes('chimes.wav')));
+  assert.deepStrictEqual(buildPlayback('win32', 'C:\\Windows\\Media\\chimes.wav'), {
+    command: 'powershell',
+    args: ['-NoProfile', '-Command',
+      "(New-Object System.Media.SoundPlayer 'C:\\Windows\\Media\\chimes.wav').PlaySync()"],
+  });
+});
+
+test('win32 escapes single quotes in the path', () => {
+  const pb = buildPlayback('win32', "C:\\Users\\O'Brien\\alert.wav");
+  assert.ok(pb.args[2].includes("O''Brien"));
 });
 
 test('darwin uses afplay', () => {
