@@ -23,4 +23,8 @@ CLAUDE_NOTIFY_SOUND=/path/to/my-sound.wav
 
 - Requires **Node.js** on `PATH`.
 - The terminal CLI (`node scripts/play.js`) is verified working on Windows, macOS, and Linux.
-- VS Code extension behavior may differ from the terminal CLI; test it manually before relying on it in that environment.
+
+## Verification
+
+- **Terminal CLI:** both `Stop` and `Notification` hooks fire — sound plays on finish and on questions/permission prompts. ✅
+- **VS Code extension:** the `Stop` hook fires (sound on finish ✅), but the `Notification` hook does **not** fire (no sound on questions / permission prompts ❌). This is a known parity bug in the VS Code extension — it shows permission prompts through its own native UI and does not emit `Notification` hook events (Claude Code issues [#28774](https://github.com/anthropics/claude-code/issues/28774), [#59718](https://github.com/anthropics/claude-code/issues/59718), [#31285](https://github.com/anthropics/claude-code/issues/31285)). No in-extension workaround exists. **Workaround:** run Claude Code in VS Code's integrated terminal instead of the extension to get the `Notification` sound.
