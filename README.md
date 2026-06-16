@@ -5,7 +5,7 @@ Cross-platform notification sound on Claude Code `Stop` and `Notification` hooks
 ## Install
 
 ```
-/plugin marketplace add <git-url-of-this-repo>
+/plugin marketplace add andreysava19/claude-notify-sound
 /plugin install claude-notify-sound@clg-internal
 ```
 
