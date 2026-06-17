@@ -27,7 +27,7 @@ Run these inside Claude Code **in a terminal**:
 
 ```
 /plugin marketplace add andreysava19/claude-notify-sound
-/plugin install claude-notify-sound@clg-internal
+/plugin install claude-notify-sound@notify-sound
 ```
 
 Then confirm the hooks loaded:
